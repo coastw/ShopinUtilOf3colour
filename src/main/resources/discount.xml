@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<discounts>
+    <discount discribe="14年春old" percent="10%" regex="^[KS]141.*" />
+    <discount discribe="14年夏old" percent="10%" regex="^[KS]142.*" />
+    <discount discribe="14年秋old" percent="10%" regex="^[KS]143.*" />
+    <discount discribe="14年冬old" percent="10%" regex="^[KS]144.*" />
+    <discount discribe="14年春" percent="10%" regex="^[KS]41.*" />
+    <discount discribe="14年夏" percent="10%" regex="^[KS]42.*" />
+    <discount discribe="14年秋" percent="10%" regex="^[KS]43.*" />
+    <discount discribe="14年冬" percent="10%" regex="^[KS]44.*" />
+    <discount discribe="15年春" percent="20%" regex="^[KS]51.*" />
+    <discount discribe="15年夏" percent="20%" regex="^[KS]52.*" />
+    <discount discribe="15年秋" percent="30%" regex="^[KS]53.*" />
+    <discount discribe="15年冬" percent="100%" regex="^[KS]54.*" />
+    <discount discribe="16年春" percent="40%" regex="^[KS]61.*" />
+    <discount discribe="16年夏" percent="40%" regex="^[KS]62.*" />
+    <discount discribe="16年秋" percent="50%" regex="^[KS]63.*" />
+    <discount discribe="16年冬" percent="100%" regex="^[KS]64.*" />
+    <discount discribe="17年春" percent="100%" regex="^[KS]71.*" />
+    <discount discribe="17年夏" percent="100%" regex="^[KS]72.*" />
+    <discount discribe="17年秋" percent="100%" regex="^[KS]73.*" />
+    <discount discribe="17年冬" percent="100%" regex="^[KS]74.*" />
+    <discount discribe="18年春" percent="100%" regex="^[KS]81.*" />
+    <discount discribe="18年夏" percent="100%" regex="^[KS]82.*" />
+    <discount discribe="18年秋" percent="100%" regex="^[KS]83.*" />
+    <discount discribe="18年冬" percent="100%" regex="^[KS]84.*" />
+    <discount discribe="19年春" percent="100%" regex="^[KS]91.*" />
+    <discount discribe="19年夏" percent="100%" regex="^[KS]92.*" />
+    <discount discribe="19年秋" percent="100%" regex="^[KS]93.*" />
+    <discount discribe="19年冬" percent="100%" regex="^[KS]94.*" />
+</discounts>
