@@ -20,6 +20,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,6 +31,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * @author Coast
  */
 public class Controler {
+    
+    private static final Logger LOGGER = Logger.getLogger(Controler.class);
 
     public static ResultMSG merge(String sapFile, String exportFile, String mergedFilePath, boolean isOrder, List<Discount> discounts) {
         ResultMSG resultMSG = new ResultMSG();
@@ -53,7 +56,7 @@ public class Controler {
                 generateSAP(products, inFile, outFile, resultMSG, discounts);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.toString());
         } finally {
             return resultMSG;
         }
@@ -68,9 +71,24 @@ public class Controler {
 //        String path = Controler.class.getClassLoader().getResource("").getPath(); 
 //        String shopinSAPTemplateFile = path+shopinSAPTemplateFileName;
         try {
+            //delete generated sap file which is generated last time
             File f = new File(outFile);
             f.delete();
-            is = new FileInputStream(new File(inFile));
+            //choose sap template
+            if (inFile.equals("")) {
+                if (products.size() < 300) {
+                    is = Controler.class.getResourceAsStream("/saptemplate/tmp3h.xlsx");
+                } else if (products.size() < 1000) {
+                    is = Controler.class.getResourceAsStream("/saptemplate/tmp1k.xlsx");
+                } else if (products.size() < 5000) {
+                    is = Controler.class.getResourceAsStream("/saptemplate/tmp5k.xlsx");
+                } else {
+                    is = Controler.class.getResourceAsStream("/saptemplate/tmp1w.xlsx");
+                }
+            } else {
+                is = new FileInputStream(new File(inFile));
+            }
+
             Workbook wb = WorkbookFactory.create(is);
             Sheet sheet = wb.getSheetAt(0);
 
@@ -172,7 +190,7 @@ public class Controler {
             os.flush();
             resultMSG.setWriteMessage("写入完成,共:" + sum + "件");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.toString());
             resultMSG.setWriteMessage("写入出错,共:" + sum + "件,错误:" + e.toString());
         } finally {
             is.close();

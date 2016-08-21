@@ -34,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        shopinFileTextField.setText("");
         this.setLocation((int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - this.getWidth() / 2,
                 (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - this.getHeight() / 2);
         outputLocationTextField.setText(getAppDir());
@@ -58,7 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
         shopinFileLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ourFileTextField = new javax.swing.JTextField();
-        shopinFileTextField = new javax.swing.JTextField();
+        shopinFileTextField = new javax.swing.JTextField("");
         outputLocationTextField = new javax.swing.JTextField();
         ourFileButton = new javax.swing.JButton();
         shopinFileButton = new javax.swing.JButton();
