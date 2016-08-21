@@ -98,6 +98,7 @@ public class ProductToSAPUtil {
             case "W":
             case "Z":
             case "G":
+            case "Y":
                 secondType = "女装上装";
                 break;
             case "K":
@@ -183,9 +184,9 @@ public class ProductToSAPUtil {
                 break;
 //            case "091":
 //            case "092":
-//            case "093":
-//                thirdType = "羽绒服";
-//                break;
+            case "Y":
+                thirdType = "羽绒服";
+                break;
 //            case "141":
 //                thirdType = "中款皮草";
 //                break;

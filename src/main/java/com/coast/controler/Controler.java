@@ -5,8 +5,10 @@
  */
 package com.coast.controler;
 
+import com.coast.model.Discount;
 import com.coast.model.Product;
 import com.coast.model.ResultMSG;
+import com.coast.util.DiscountUtil;
 import com.coast.util.POIUtil;
 import com.coast.util.ProductToSAPUtil;
 import java.io.File;
@@ -14,8 +16,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,7 +31,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public class Controler {
 
-    public static ResultMSG merge(String sapFile, String exportFile, String mergedFilePath, boolean isOrder) {
+    public static ResultMSG merge(String sapFile, String exportFile, String mergedFilePath, boolean isOrder, List<Discount> discounts) {
         ResultMSG resultMSG = new ResultMSG();
         resultMSG.setErrorMessage("");
         try {
@@ -46,7 +50,7 @@ public class Controler {
             } else {
                 String outFileName = sapFile.substring(lastSlash + 1, sapFile.length() - 4) + "_sap_merged.xlsx";
                 String outFile = mergedFilePath + File.separator + outFileName;
-                generateSAP(products, inFile, outFile, resultMSG);
+                generateSAP(products, inFile, outFile, resultMSG, discounts);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +59,7 @@ public class Controler {
         }
     }
 
-    private static void generateSAP(ArrayList<Product> products, String inFile, String outFile, ResultMSG resultMSG) throws Exception {
+    private static void generateSAP(ArrayList<Product> products, String inFile, String outFile, ResultMSG resultMSG,List<Discount> discounts) throws Exception {
 
         int sum = 0;
         InputStream is = null;
@@ -132,8 +136,28 @@ public class Controler {
                 orgPricecell.setCellValue(product.getOrgPrice());
 
                 //21 now price
-//                cell = currentRow.getCell(21);
-//                String persent = DiscountUtil.getDiscount(info.getSn());
+                
+
+                //设置百分比格式--使用自定义的格式
+                //cell=row.createCell(3);
+                //cell.setCellValue(0.123456789);
+                //style=workbook.createCellStyle();
+                //style.setDataFormat(workbook.createDataFormat().getFormat("0.00%"));
+                //cell.setCellStyle(style);
+                //22 discount
+                String persent = new DiscountUtil().getPercent(product.getSnCode(), discounts);
+                Cell discountCell = sheet.getRow(row).createCell(22);
+                //% -> double
+                NumberFormat percentNumberFormat = NumberFormat.getPercentInstance();
+                Number number = percentNumberFormat.parse(persent);
+                double doublePercent = number.doubleValue();
+                discountCell.setCellValue(doublePercent);
+                
+                //21 now price
+                Cell nowPriceCell = sheet.getRow(row).getCell(21);
+                int nowPrice = (int) (Integer.parseInt(product.getOrgPrice()) * doublePercent);
+                nowPriceCell.setCellValue(nowPrice);
+                
                 //23
                 Cell calculateCell = sheet.getRow(row).createCell(23, Cell.CELL_TYPE_FORMULA);
                 String formula = "INT(U" + (row + 1) + "*W" + (row + 1) + ")";
