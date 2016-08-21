@@ -59,7 +59,7 @@ public class Controler {
         }
     }
 
-    private static void generateSAP(ArrayList<Product> products, String inFile, String outFile, ResultMSG resultMSG,List<Discount> discounts) throws Exception {
+    private static void generateSAP(ArrayList<Product> products, String inFile, String outFile, ResultMSG resultMSG, List<Discount> discounts) throws Exception {
 
         int sum = 0;
         InputStream is = null;
@@ -136,8 +136,6 @@ public class Controler {
                 orgPricecell.setCellValue(product.getOrgPrice());
 
                 //21 now price
-                
-
                 //设置百分比格式--使用自定义的格式
                 //cell=row.createCell(3);
                 //cell.setCellValue(0.123456789);
@@ -152,12 +150,12 @@ public class Controler {
                 Number number = percentNumberFormat.parse(persent);
                 double doublePercent = number.doubleValue();
                 discountCell.setCellValue(doublePercent);
-                
+
                 //21 now price
                 Cell nowPriceCell = sheet.getRow(row).getCell(21);
-                int nowPrice = (int) (Integer.parseInt(product.getOrgPrice()) * doublePercent);
+                double nowPrice = Math.floor(Integer.parseInt(product.getOrgPrice()) * doublePercent);
                 nowPriceCell.setCellValue(nowPrice);
-                
+
                 //23
                 Cell calculateCell = sheet.getRow(row).createCell(23, Cell.CELL_TYPE_FORMULA);
                 String formula = "INT(U" + (row + 1) + "*W" + (row + 1) + ")";
