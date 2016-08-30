@@ -162,9 +162,9 @@ public class ProductToSAPUtil {
                 break;
 //            case "111":
 //            case "112":
-//            case "113":
-//                thirdType = "大衣";
-//                break;
+            case "D":
+                thirdType = "大衣";
+                break;
 //            case "051":
             case "F":
                 thirdType = "风衣";
