@@ -34,6 +34,29 @@ public class Controler {
     
     private static final Logger LOGGER = Logger.getLogger(Controler.class);
 
+    
+    public static ResultMSG doOut(String sapFile, String exportFile, String mergedFilePath) {
+        ResultMSG resultMSG = new ResultMSG();
+        resultMSG.setErrorMessage("");
+        try {
+            ArrayList<Product> products;
+            //要导入到模板的SAP文件
+            products = readProductsFromOurOutExcel(sapFile, resultMSG);
+            //从上品网站导出的模板文件
+            String inFile = exportFile;
+            //最后上传到上品网站的文件
+            int lastSlash = sapFile.lastIndexOf(File.separator);
+            //执行
+                String outFileName = sapFile.substring(lastSlash + 1, sapFile.length() - 4) + "_OutOrder_Merged.xls";
+                String outFile = mergedFilePath + File.separator + outFileName;
+                generateOutOrder(products, inFile, outFile, resultMSG);
+        } catch (Exception e) {
+            LOGGER.error(e.toString());
+        } finally {
+            return resultMSG;
+        }
+    }
+    
     public static ResultMSG merge(String sapFile, String exportFile, String mergedFilePath, boolean isOrder, List<Discount> discounts) {
         ResultMSG resultMSG = new ResultMSG();
         resultMSG.setErrorMessage("");
@@ -239,6 +262,48 @@ public class Controler {
         }
     }
 
+    private static void generateOutOrder(ArrayList<Product> products, String inFile, String outFile, ResultMSG resultMSG) throws Exception {
+        int sum = 0;
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            File f = new File(outFile);
+            f.delete();
+            is = new FileInputStream(new File(inFile));
+            Workbook wb = WorkbookFactory.create(is);
+            Sheet sheet = wb.getSheetAt(0);
+            String brand = null;
+            Iterator<Product> iter = products.iterator();
+            while (iter.hasNext()) {
+                Product product = iter.next();
+                ProductToSAPUtil sapUtil = new ProductToSAPUtil(product);
+
+                String fullSize = product.getSize() + "(" + sapUtil.getInternationalSize() + ")";
+                int thatRowNum = getRowNum(sheet, product.getSnCode(), product.getColorCode(), fullSize);
+                if (thatRowNum == 0) {
+                    String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + fullSize + " amount=" + product.getAmount() + "\n";
+                    resultMSG.setErrorMessage(resultMSG.getErrorMessage() + notFoundMsg);
+                } else {
+                    sheet.getRow(thatRowNum).createCell(6).setCellValue((int) product.getAmount());
+                    sum += product.getAmount();
+                }
+            }
+
+            //
+            os = new FileOutputStream(new File(outFile));
+            wb.write(os);
+            os.flush();
+            resultMSG.setWriteMessage("写入完成,共:" + sum + "件");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMSG.setWriteMessage("写入出错,共:" + sum + "件,错误:" + e.toString());
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+    
+    
     public static ArrayList<Product> readProductsFromMyExcel(String file, ResultMSG resultMSG) throws Exception {
         ArrayList<Product> products = new ArrayList<Product>();
         InputStream is = null;
@@ -311,6 +376,78 @@ public class Controler {
         }
     }
 
+    public static ArrayList<Product> readProductsFromOurOutExcel(String file, ResultMSG resultMSG) throws Exception {
+        ArrayList<Product> products = new ArrayList<Product>();
+        InputStream is = null;
+        int sum = 0;
+        int row = 1;
+        try {
+            File f = new File(file);
+            is = new FileInputStream(f);
+            Workbook wb = WorkbookFactory.create(is);
+            Sheet sheet = wb.getSheetAt(0);
+
+            POIUtil poiUtil = new POIUtil();
+            int lastRowNum = sheet.getLastRowNum();
+            while (row <= lastRowNum) {
+                //款号为空就停止
+                Cell firstCell = sheet.getRow(row).getCell(0);
+                if (firstCell == null) {
+                    break;
+                }
+                if (firstCell.getRichStringCellValue().toString().toUpperCase() == "") {
+                    break;
+                }
+
+                //fullsn
+                Cell fullSnCell = sheet.getRow(row).getCell(0);
+                String fullSn = poiUtil.getCellContentToString(fullSnCell);
+                int len = fullSn.length();
+                String snCode = fullSn.substring(0, len - 3);
+                String colorCode = fullSn.substring(len - 3, len - 1);
+                String sizeCode = fullSn.substring(len - 1, len);
+//                String sizeRegex = convertSizeToRegex(sizeCode);
+
+                //type
+                Cell typeCell = sheet.getRow(row).getCell(1);
+                String type = poiUtil.getCellContentToString(typeCell);
+
+                //color
+                Cell colorCell = sheet.getRow(row).getCell(2);
+                String color = poiUtil.getCellContentToString(colorCell);
+
+                //size
+                Cell sizeCell = sheet.getRow(row).getCell(3);
+                String size = poiUtil.getCellContentToString(sizeCell);
+
+                //price
+                Cell priceCell = sheet.getRow(row).getCell(5);
+                String orgPrice = poiUtil.getCellContentToString(priceCell);
+
+                //amount
+                Cell amountCell = sheet.getRow(row).getCell(6);
+                int amount = Integer.parseInt(poiUtil.getCellContentToString(amountCell));
+
+                //Porduct
+                Product product = new Product(fullSn, snCode, colorCode, sizeCode, type, color, size, orgPrice, amount);
+
+                products.add(product);
+
+                sum += product.getAmount();
+                row++;
+            }
+            resultMSG.setReadMessage("出库读取完成,共:" + sum + "件!");
+        } catch (Exception e) {
+            System.err.println("readProductsFromMyExcel出现异常:行=" + row + "列=目前无法确定" + e.toString());
+            products = null;
+            e.printStackTrace();
+            resultMSG.setReadMessage("出库读取出错,共:" + sum + "件!错误:" + e.toString());
+        } finally {
+            is.close();
+            return products;
+        }
+    }
+    
     /**
      * 在上品导出的excel中找到对应的行
      *
@@ -341,5 +478,8 @@ public class Controler {
         }
         return 0;
     }
+
+    
+
 
 }

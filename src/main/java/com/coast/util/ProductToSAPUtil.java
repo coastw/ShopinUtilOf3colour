@@ -227,6 +227,9 @@ public class ProductToSAPUtil {
                 case "6":
                     internationalSize = "180/84A";
                     break;
+                case "8":
+                    internationalSize = "150/60A";
+                    break;
                 default:
                     internationalSize = "#" + sizeCode;
                     break;
@@ -250,6 +253,9 @@ public class ProductToSAPUtil {
                     break;
                 case "6":
                     internationalSize = "180/100A";
+                    break;
+                case "8":
+                    internationalSize = "150/76A";
                     break;
                 default:
                     internationalSize = "#" + sizeCode;
