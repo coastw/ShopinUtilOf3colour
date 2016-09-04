@@ -205,9 +205,10 @@ public class ProductToSAPUtil {
     public String getInternationalSize() {
         String internationalSize;
         String sizeCode = this.product.getSizeCode();
-        //下身
         String typeCode = this.product.getFullSn().substring(7, 8).toUpperCase();
-        if (typeCode.equals("K") || typeCode.equals("Q") || typeCode.equals("E")) {
+
+        //下身
+        if (typeCode.equals("K") || typeCode.equals("Q") || typeCode.equals("E") || typeCode.equals("N")) {
             switch (sizeCode) {
                 case "1":
                     internationalSize = "155/64A";
@@ -221,14 +222,24 @@ public class ProductToSAPUtil {
                 case "4":
                     internationalSize = "170/76A";
                     break;
+                //2XL
                 case "5":
                     internationalSize = "175/80A";
                     break;
+                //3XL
                 case "6":
                     internationalSize = "180/84A";
                     break;
+                // 7 : 4XL
+                case "7":
+                    internationalSize = "185/88A";
+                    break;
                 case "8":
                     internationalSize = "150/60A";
+                    break;
+                // 9 : 5XL
+                case "9":
+                    internationalSize = "190/92A";
                     break;
                 default:
                     internationalSize = "#" + sizeCode;
@@ -254,8 +265,14 @@ public class ProductToSAPUtil {
                 case "6":
                     internationalSize = "180/100A";
                     break;
+                case "7":
+                    internationalSize = "185/104A";
+                    break;
                 case "8":
                     internationalSize = "150/76A";
+                    break;
+                case "9":
+                    internationalSize = "190/108A";
                     break;
                 default:
                     internationalSize = "#" + sizeCode;
