@@ -26,6 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private boolean isOutOrder = false;
     private boolean isOrder = false;
+    private boolean isSell = false;
     private List<Discount> discounts;
 
     private static final String NEXT_LINE = System.getProperty("line.separator");
@@ -43,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         buttonGroup.add(sapRadioButton);
         buttonGroup.add(orderRadioButton);
         buttonGroup.add(outRadioButton);
+        buttonGroup.add(sellRadioButton);
     }
 
     /**
@@ -73,6 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         resultMessageTextArea = new javax.swing.JTextArea();
         outRadioButton = new javax.swing.JRadioButton();
+        sellRadioButton = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -152,14 +155,23 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        sellRadioButton.setText("销售小票");
+        sellRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sellRadioButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(231, 231, 231)
+                .addGap(225, 225, 225)
                 .addComponent(outRadioButton)
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(sellRadioButton)
+                .addContainerGap(275, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -202,7 +214,9 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(outRadioButton)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(outRadioButton)
+                    .addComponent(sellRadioButton))
                 .addContainerGap(455, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -345,8 +359,10 @@ public class MainFrame extends javax.swing.JFrame {
         // 生成需要上传的excel文件
 //        resultMessageTextArea.setText("");
         ResultMSG resultMSG = new ResultMSG();
-        if (isOutOrder) {
-            resultMSG = Controler.doOut(ourFileTextField.getText(),shopinFileTextField.getText(),outputLocationTextField.getText());
+        if (isSell) {
+            resultMSG = Controler.doSell(shopinFileTextField.getText(), outputLocationTextField.getText());
+        } else if (isOutOrder) {
+            resultMSG = Controler.doOut(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText());
         } else {
             resultMSG = Controler.merge(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText(), isOrder, discounts);
         }
@@ -358,6 +374,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.isOutOrder = false;
         this.isOrder = false;
+        this.isSell = false;
         this.shopinFileLabel.setText("上品SAP模板");
     }//GEN-LAST:event_sapRadioButtonActionPerformed
 
@@ -365,6 +382,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.isOutOrder = false;
         this.isOrder = true;
+        this.isSell = false;
         this.shopinFileLabel.setText("上品订单文件");
     }//GEN-LAST:event_orderRadioButtonActionPerformed
 
@@ -372,8 +390,17 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.isOutOrder = true;
         this.isOrder = false;
+        this.isSell = false;
         this.shopinFileLabel.setText("上品订单文件");
     }//GEN-LAST:event_outRadioButtonActionPerformed
+
+    private void sellRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isOutOrder = false;
+        this.isOrder = false;
+        this.isSell = true;
+        this.shopinFileLabel.setText("上品销售文件");
+    }//GEN-LAST:event_sellRadioButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -429,6 +456,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton resetButton;
     private javax.swing.JTextArea resultMessageTextArea;
     private javax.swing.JRadioButton sapRadioButton;
+    private javax.swing.JRadioButton sellRadioButton;
     private javax.swing.JButton shopinFileButton;
     private javax.swing.JLabel shopinFileLabel;
     private javax.swing.JTextField shopinFileTextField;

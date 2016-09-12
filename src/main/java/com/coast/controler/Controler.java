@@ -8,6 +8,8 @@ package com.coast.controler;
 import com.coast.model.Discount;
 import com.coast.model.Product;
 import com.coast.model.ResultMSG;
+import com.coast.service.SellService;
+import com.coast.service.impl.SellServiceImpl;
 import com.coast.util.DiscountUtil;
 import com.coast.util.POIUtil;
 import com.coast.util.ProductToSAPUtil;
@@ -38,6 +40,15 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class Controler {
 
     private static final Logger LOGGER = Logger.getLogger(Controler.class);
+
+    public static ResultMSG doSell(String shopinFilePath, String outPutFilePath) {
+        ResultMSG resultMSG = new ResultMSG();
+        resultMSG.setErrorMessage("");
+        SellService sellService = new SellServiceImpl();
+        List<Product> products = sellService.getProductsFromShopinSellExcel(shopinFilePath, resultMSG);
+        sellService.write(products, outPutFilePath, resultMSG);
+        return resultMSG;
+    }
 
     public static ResultMSG doOut(String sapFile, String exportFile, String mergedFilePath) {
         ResultMSG resultMSG = new ResultMSG();

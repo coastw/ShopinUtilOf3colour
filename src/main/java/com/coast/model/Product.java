@@ -18,7 +18,11 @@ public class Product {
     private String color;
     private String brandSize;
     private String orgPrice;
+    private String sellPrice;
     private int amount;
+
+    public Product() {
+    }
 
     public Product(String fullSn, String snCode, String colorCode, String sizeCode, String type, String color, String size, String orgPrice, int amount) {
         this.fullSn = fullSn;
@@ -96,6 +100,15 @@ public class Product {
         this.orgPrice = orgPrice;
     }
 
+    public String getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(String sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    
     public int getAmount() {
         return amount;
     }
