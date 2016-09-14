@@ -110,10 +110,10 @@ public class SellServiceImpl implements SellService {
             //DRP会读取第一行作为标题行,所以数据从第二行开始写
             Row titileRow = sheet.createRow(0);
             Cell fullSnCell = titileRow.createCell(0);
-            fullSnCell.setCellValue("款号");
-            Cell amountCell = titileRow.createCell(1);
+            fullSnCell.setCellValue("商品代码");
+            Cell amountCell = titileRow.createCell(2);
             amountCell.setCellValue("数量");
-            Cell sellPriceCell = titileRow.createCell(2);
+            Cell sellPriceCell = titileRow.createCell(1);
             sellPriceCell.setCellValue("折后价");
             int rowNum = 1;
             for (Product product : products) {
@@ -122,10 +122,10 @@ public class SellServiceImpl implements SellService {
                 Cell cell = row.createCell(0);
                 cell.setCellValue(product.getFullSn());
 
-                cell = row.createCell(1);
+                cell = row.createCell(2);
                 cell.setCellValue(product.getAmount());
 
-                cell = row.createCell(2);
+                cell = row.createCell(1);
                 cell.setCellValue(product.getSellPrice());
                 
                 rowNum++;
