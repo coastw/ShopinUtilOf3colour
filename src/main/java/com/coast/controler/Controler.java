@@ -259,13 +259,13 @@ public class Controler {
                 Product product = iter.next();
                 ProductToSAPUtil sapUtil = new ProductToSAPUtil(product);
 
-                String fullSize = product.getSize() + "(" + sapUtil.getInternationalSize() + ")";
-                int thatRowNum = getRowNum(sheet, product.getSnCode(), product.getColorCode(), fullSize);
+//                String fullSize = product.getSize() + "(" + sapUtil.getInternationalSize() + ")";
+                int thatRowNum = getRowNum(sheet, product.getSnCode(), product.getColorCode(), sapUtil.getInternationalSize());
                 if (thatRowNum == 0) {
-                    String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + fullSize + " amount=" + product.getAmount() + "\n";
+                    String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + sapUtil.getInternationalSize() + " amount=" + product.getAmount() + "\n";
                     resultMSG.setErrorMessage(resultMSG.getErrorMessage() + notFoundMsg);
                 } else {
-                    sheet.getRow(thatRowNum).createCell(6).setCellValue(product.getAmount());
+                    sheet.getRow(thatRowNum).createCell(7).setCellValue(product.getAmount());
                     sum += product.getAmount();
                 }
             }
@@ -298,11 +298,12 @@ public class Controler {
                 Product product = iter.next();
                 ProductToSAPUtil sapUtil = new ProductToSAPUtil(product);
 
-                String fullSize = product.getSize() + "(" + sapUtil.getInternationalSize() + ")";
-                int thatRowNum = getRowNum(sheet, product.getSnCode(), product.getColorCode(), fullSize);
+//                String fullSize = product.getSize() + "(" + sapUtil.getInternationalSize() + ")";
+                int thatRowNum = getRowNum(sheet, product.getSnCode(), product.getColorCode(), sapUtil.getInternationalSize());
                 if (thatRowNum == 0) {
-                    String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + fullSize + " amount=" + product.getAmount() + "\n";
+                    String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + sapUtil.getInternationalSize() + " amount=" + product.getAmount() + "\n";
                     resultMSG.setErrorMessage(resultMSG.getErrorMessage() + notFoundMsg);
+                    LOGGER.debug(notFoundMsg);
                 } else {
                     sheet.getRow(thatRowNum).createCell(6).setCellValue(product.getAmount());
                     sum += product.getAmount();
@@ -467,9 +468,9 @@ public class Controler {
         int lastRowNum = sheet.getLastRowNum();//excell中左后一行显示为lastRowNum+1;
         int rowNum = lastRowNum;
         while (rowNum > 0) {
-            Cell snCell = sheet.getRow(rowNum).getCell(3);
-            Cell colorCell = sheet.getRow(rowNum).getCell(4);
-            Cell sizeCell = sheet.getRow(rowNum).getCell(5);
+            Cell snCell = sheet.getRow(rowNum).getCell(4);
+            Cell colorCell = sheet.getRow(rowNum).getCell(5);
+            Cell sizeCell = sheet.getRow(rowNum).getCell(6);
             POIUtil poiUtil = new POIUtil();
             String targetSn = poiUtil.getCellContentToString(snCell);
             String targetColor = poiUtil.getCellContentToString(colorCell);
