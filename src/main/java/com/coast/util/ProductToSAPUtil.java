@@ -133,7 +133,7 @@ public class ProductToSAPUtil {
 //                thirdType = "短裤";
 //                break;
             case "N":
-                thirdType = "休闲裤";
+                thirdType = "牛仔裤";
                 break;
             case "K":
             case "E":

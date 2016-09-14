@@ -101,13 +101,11 @@ public class Controler {
             //choose sap template
             if (inFile.equals("")) {
                 if (products.size() < 300) {
-                    is = Controler.class.getResourceAsStream("/saptemplate/tmp3h.xlsx");
+                    is = Controler.class.getResourceAsStream("/saptemplate/sap300.xlsx");
                 } else if (products.size() < 1000) {
-                    is = Controler.class.getResourceAsStream("/saptemplate/tmp1k.xlsx");
-                } else if (products.size() < 5000) {
-                    is = Controler.class.getResourceAsStream("/saptemplate/tmp5k.xlsx");
+                    is = Controler.class.getResourceAsStream("/saptemplate/sap1000.xlsx");
                 } else {
-                    is = Controler.class.getResourceAsStream("/saptemplate/tmp1w.xlsx");
+                    is = Controler.class.getResourceAsStream("/saptemplate/sapinfinity.xlsx");
                 }
             } else {
                 is = new FileInputStream(new File(inFile));
@@ -160,7 +158,10 @@ public class Controler {
                 thirdTypeCell.setCellValue(sapUtil.getThirdType());
                 //国际尺码
                 Cell internationalSizeCell = sheet.getRow(row).getCell(11);
-                internationalSizeCell.setCellValue(product.getSize() + "(" + sapUtil.getInternationalSize() + ")");
+                //new
+                internationalSizeCell.setCellValue(sapUtil.getInternationalSize());
+                //old
+//                internationalSizeCell.setCellValue(product.getSize() + "(" + sapUtil.getInternationalSize() + ")");
                 //企业尺码
 //                Cell brandSizeCell = sheet.getRow(row).getCell(11);
 //                brandSizeCell.setCellValue(product.getSize());
@@ -174,7 +175,11 @@ public class Controler {
                 Cell attributeCell = sheet.getRow(row).getCell(16);
                 attributeCell.setCellValue("无");
                 //price
+                //new
                 Cell orgPricecell = sheet.getRow(row).getCell(20);
+                if (orgPricecell==null) {
+                    orgPricecell = sheet.getRow(row).createCell(20);
+                }
                 orgPricecell.setCellValue(product.getOrgPrice());
 
                 //21 now price
