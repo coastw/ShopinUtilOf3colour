@@ -207,6 +207,47 @@ public class ProductToSAPUtil {
         String sizeCode = this.product.getSizeCode();
         String typeCode = this.product.getFullSn().substring(7, 8).toUpperCase();
 
+        //80 84
+        if (typeCode.equals("M")) {
+            switch (sizeCode) {
+                case "1":
+                    internationalSize = "75cm";
+                    break;
+                case "2":
+                    internationalSize = "80cm";
+                    break;
+                case "3":
+                    internationalSize = "85cm";
+                    break;
+                case "4":
+                    internationalSize = "90cm";
+                    break;
+                //2XL
+                case "5":
+                    internationalSize = "95cm";
+                    break;
+                //3XL
+                case "6":
+                    internationalSize = "100cm";
+                    break;
+                // 7 : 4XL
+                case "7":
+                    internationalSize = "105cm";
+                    break;
+                case "8":
+                    internationalSize = "70cm";
+                    break;
+                // 9 : 5XL
+                case "9":
+                    internationalSize = "110cm";
+                    break;
+                default:
+                    internationalSize = "#" + sizeCode;
+                    break;
+            }
+            return internationalSize;
+        }
+        //160 165
         //下身
         if (typeCode.equals("K") || typeCode.equals("Q") || typeCode.equals("E") || typeCode.equals("N")) {
             switch (sizeCode) {
