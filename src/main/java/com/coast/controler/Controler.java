@@ -477,7 +477,7 @@ public class Controler {
             String targetSize = poiUtil.getCellContentToString(sizeCell);
             if (targetSn.equals(sn)
                     && targetColor.equals(colorCode)
-                    && targetSize.equals(size)) {
+                    && targetSize.equals(size.toUpperCase())) {
                 return rowNum;
             }
             rowNum--;   //从下往上找

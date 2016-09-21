@@ -211,35 +211,35 @@ public class ProductToSAPUtil {
         if (typeCode.equals("M")) {
             switch (sizeCode) {
                 case "1":
-                    internationalSize = "75cm";
+                    internationalSize = "75CM";
                     break;
                 case "2":
-                    internationalSize = "80cm";
+                    internationalSize = "80CM";
                     break;
                 case "3":
-                    internationalSize = "85cm";
+                    internationalSize = "85CM";
                     break;
                 case "4":
-                    internationalSize = "90cm";
+                    internationalSize = "90CM";
                     break;
                 //2XL
                 case "5":
-                    internationalSize = "95cm";
+                    internationalSize = "95CM";
                     break;
                 //3XL
                 case "6":
-                    internationalSize = "100cm";
+                    internationalSize = "100CM";
                     break;
                 // 7 : 4XL
                 case "7":
-                    internationalSize = "105cm";
+                    internationalSize = "105CM";
                     break;
                 case "8":
-                    internationalSize = "70cm";
+                    internationalSize = "70CM";
                     break;
                 // 9 : 5XL
                 case "9":
-                    internationalSize = "110cm";
+                    internationalSize = "110CM";
                     break;
                 default:
                     internationalSize = "#" + sizeCode;
