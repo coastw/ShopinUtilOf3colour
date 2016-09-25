@@ -144,23 +144,23 @@ public class SellServiceImpl implements SellService {
         String size = sizeText.toUpperCase();
         if (size.matches("^F.*")) {
             sizeCode = "0";
-        } else if (size.matches("^S.*") || size.matches("^155.*")) {
+        } else if (size.matches("^S.*") || size.matches("^155.*")||size.matches("^75CM")) {
             sizeCode = "1";
-        } else if (size.matches("^M.*") || size.matches("^160.*")) {
+        } else if (size.matches("^M.*") || size.matches("^160.*")||size.matches("^80CM")) {
             sizeCode = "2";
-        } else if (size.matches("^L.*") || size.matches("^165.*")) {
+        } else if (size.matches("^L.*") || size.matches("^165.*")||size.matches("^85CM")) {
             sizeCode = "3";
-        } else if (size.matches("^XL.*") || size.matches("^170.*")) {
+        } else if (size.matches("^XL.*") || size.matches("^170.*")||size.matches("^90CM")) {
             sizeCode = "4";
-        } else if (size.matches("^2XL.*") || size.matches("^XXL.*") || size.matches("^175.*")) {
+        } else if (size.matches("^2XL.*") || size.matches("^XXL.*") || size.matches("^175.*")||size.matches("^95CM")) {
             sizeCode = "5";
-        } else if (size.matches("^3XL.*") || size.matches("^XXXL.*") || size.matches("^180.*")) {
+        } else if (size.matches("^3XL.*") || size.matches("^XXXL.*") || size.matches("^180.*")||size.matches("^100CM")) {
             sizeCode = "6";
-        } else if (size.matches("^4XL.*") || size.matches("^185.*")) {
+        } else if (size.matches("^4XL.*") || size.matches("^185.*")||size.matches("^105CM")) {
             sizeCode = "7";
-        } else if (size.matches("^XS.*") || size.matches("^150.*")) {
+        } else if (size.matches("^XS.*") || size.matches("^150.*")||size.matches("^70CM")) {
             sizeCode = "8";
-        } else if (size.matches("^5XL.*") || size.matches("^190.*")) {
+        } else if (size.matches("^5XL.*") || size.matches("^190.*")||size.matches("^110CM")) {
             sizeCode = "9";
         }
 
