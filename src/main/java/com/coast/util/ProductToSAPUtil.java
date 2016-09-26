@@ -207,8 +207,8 @@ public class ProductToSAPUtil {
         String sizeCode = this.product.getSizeCode();
         String typeCode = this.product.getFullSn().substring(7, 8).toUpperCase();
 
-        //80 84
-        if (typeCode.equals("M")) {
+        //80 85 90CM only 3colour
+        if (typeCode.equals("M") && this.product.getSnCode().matches("[sS].*")) {
             switch (sizeCode) {
                 case "1":
                     internationalSize = "75CM";
