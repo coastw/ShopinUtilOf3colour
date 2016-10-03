@@ -5,10 +5,13 @@
  */
 package com.coast.controler;
 
+import com.coast.model.BJDProduct;
 import com.coast.model.Discount;
 import com.coast.model.Product;
 import com.coast.model.ResultMSG;
+import com.coast.service.BJDService;
 import com.coast.service.SellService;
+import com.coast.service.impl.BJDServiceImpl;
 import com.coast.service.impl.SellServiceImpl;
 import com.coast.util.DiscountUtil;
 import com.coast.util.POIUtil;
@@ -483,6 +486,15 @@ public class Controler {
             rowNum--;   //从下往上找
         }
         return 0;
+    }
+
+    public static ResultMSG generateBJD(String drpFilePath, String outPutFilePath) {
+        ResultMSG resultMSG = new ResultMSG();
+        resultMSG.setErrorMessage("");
+        BJDService bjdService = new BJDServiceImpl();
+        List<BJDProduct> products = bjdService.readDRPStock(drpFilePath, resultMSG);
+        bjdService.write(products, outPutFilePath, resultMSG);
+        return resultMSG;
     }
 
 }

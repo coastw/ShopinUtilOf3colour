@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -104,7 +103,7 @@ public class SellServiceImpl implements SellService {
         }
         try (Workbook wb = new HSSFWorkbook(); FileOutputStream fos = new FileOutputStream(file)) {
             //Workbook wb = new XSSFWorkbook();
-            CreationHelper createHelper = wb.getCreationHelper();
+            //CreationHelper createHelper = wb.getCreationHelper();
             Sheet sheet = wb.createSheet("销售小票");
 
             //DRP会读取第一行作为标题行,所以数据从第二行开始写

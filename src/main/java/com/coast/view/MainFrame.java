@@ -27,6 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean isOutOrder = false;
     private boolean isOrder = false;
     private boolean isSell = false;
+    private boolean isBJD = false;
     private List<Discount> discounts;
 
     private static final String NEXT_LINE = System.getProperty("line.separator");
@@ -45,6 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
         buttonGroup.add(orderRadioButton);
         buttonGroup.add(outRadioButton);
         buttonGroup.add(sellRadioButton);
+        buttonGroup.add(bjdRadioButton);
     }
 
     /**
@@ -76,10 +78,10 @@ public class MainFrame extends javax.swing.JFrame {
         resultMessageTextArea = new javax.swing.JTextArea();
         outRadioButton = new javax.swing.JRadioButton();
         sellRadioButton = new javax.swing.JRadioButton();
+        bjdRadioButton = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("三彩生成上品数据");
@@ -162,6 +164,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        bjdRadioButton.setText("报价单");
+        bjdRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bjdRadioButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -171,7 +180,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(outRadioButton)
                 .addGap(18, 18, 18)
                 .addComponent(sellRadioButton)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(bjdRadioButton)
+                .addContainerGap(195, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -216,7 +227,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outRadioButton)
-                    .addComponent(sellRadioButton))
+                    .addComponent(sellRadioButton)
+                    .addComponent(bjdRadioButton))
                 .addContainerGap(455, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -263,7 +275,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,19 +283,6 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("折扣", jPanel2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("库存", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -300,6 +299,83 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sellRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isOutOrder = false;
+        this.isOrder = false;
+        this.isSell = true;
+        this.shopinFileLabel.setText("上品销售文件");
+    }//GEN-LAST:event_sellRadioButtonActionPerformed
+
+    private void outRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isOutOrder = true;
+        this.isOrder = false;
+        this.isSell = false;
+        this.shopinFileLabel.setText("上品订单文件");
+    }//GEN-LAST:event_outRadioButtonActionPerformed
+
+    private void orderRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isOutOrder = false;
+        this.isOrder = true;
+        this.isSell = false;
+        this.shopinFileLabel.setText("上品订单文件");
+    }//GEN-LAST:event_orderRadioButtonActionPerformed
+
+    private void sapRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isOutOrder = false;
+        this.isOrder = false;
+        this.isSell = false;
+        this.shopinFileLabel.setText("上品SAP模板");
+    }//GEN-LAST:event_sapRadioButtonActionPerformed
+
+    private void outputLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputLocationButtonActionPerformed
+        chooseFile(outputLocationTextField, JFileChooser.DIRECTORIES_ONLY);
+    }//GEN-LAST:event_outputLocationButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        // TODO add your handling code here:
+        this.ourFileTextField.setText("");
+        this.shopinFileTextField.setText("");
+        this.outputLocationTextField.setText("");
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // 生成需要上传的excel文件
+        //        resultMessageTextArea.setText("");
+        ResultMSG resultMSG = new ResultMSG();
+        if (isSell) {
+            resultMSG = Controler.doSell(shopinFileTextField.getText(), outputLocationTextField.getText());
+        } else if (isOutOrder) {
+            resultMSG = Controler.doOut(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText());
+        } else if (isBJD) {
+            resultMSG = Controler.generateBJD(ourFileTextField.getText(),outputLocationTextField.getText());
+        } else {
+            resultMSG = Controler.merge(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText(), isOrder, discounts);
+        }
+        String finalMessage = resultMSG.getReadMessage() + NEXT_LINE + resultMSG.getWriteMessage() + NEXT_LINE + resultMSG.getErrorMessage() + NEXT_LINE;
+        this.resultMessageTextArea.append(finalMessage);
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void shopinFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shopinFileButtonActionPerformed
+        chooseFile(shopinFileTextField, JFileChooser.FILES_ONLY, new ExcelFileFilter());
+    }//GEN-LAST:event_shopinFileButtonActionPerformed
+
+    private void ourFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ourFileButtonActionPerformed
+        chooseFile(ourFileTextField, JFileChooser.FILES_ONLY, new ExcelFileFilter());
+    }//GEN-LAST:event_ourFileButtonActionPerformed
+
+    //BJD
+    private void bjdRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bjdRadioButtonActionPerformed
+        //报价单
+        this.isBJD = true;
+        this.isOrder = false;
+        this.isOutOrder = false;
+        this.isSell = false;
+    }//GEN-LAST:event_bjdRadioButtonActionPerformed
 
     private String getAppDir() {
         String dir = System.getProperty("user.dir");
@@ -334,73 +410,6 @@ public class MainFrame extends javax.swing.JFrame {
             jTextField.setText("");
         }
     }
-
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        // TODO add your handling code here:
-        this.ourFileTextField.setText("");
-        this.shopinFileTextField.setText("");
-        this.outputLocationTextField.setText("");
-    }//GEN-LAST:event_resetButtonActionPerformed
-
-    private void ourFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ourFileButtonActionPerformed
-        chooseFile(ourFileTextField, JFileChooser.FILES_ONLY, new ExcelFileFilter());
-
-    }//GEN-LAST:event_ourFileButtonActionPerformed
-
-    private void shopinFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shopinFileButtonActionPerformed
-        chooseFile(shopinFileTextField, JFileChooser.FILES_ONLY, new ExcelFileFilter());
-    }//GEN-LAST:event_shopinFileButtonActionPerformed
-
-    private void outputLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputLocationButtonActionPerformed
-        chooseFile(outputLocationTextField, JFileChooser.DIRECTORIES_ONLY);
-    }//GEN-LAST:event_outputLocationButtonActionPerformed
-
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // 生成需要上传的excel文件
-//        resultMessageTextArea.setText("");
-        ResultMSG resultMSG = new ResultMSG();
-        if (isSell) {
-            resultMSG = Controler.doSell(shopinFileTextField.getText(), outputLocationTextField.getText());
-        } else if (isOutOrder) {
-            resultMSG = Controler.doOut(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText());
-        } else {
-            resultMSG = Controler.merge(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText(), isOrder, discounts);
-        }
-        String finalMessage = resultMSG.getReadMessage() + NEXT_LINE + resultMSG.getWriteMessage() + NEXT_LINE + resultMSG.getErrorMessage() + NEXT_LINE;
-        this.resultMessageTextArea.append(finalMessage);
-    }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void sapRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapRadioButtonActionPerformed
-        // TODO add your handling code here:
-        this.isOutOrder = false;
-        this.isOrder = false;
-        this.isSell = false;
-        this.shopinFileLabel.setText("上品SAP模板");
-    }//GEN-LAST:event_sapRadioButtonActionPerformed
-
-    private void orderRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderRadioButtonActionPerformed
-        // TODO add your handling code here:
-        this.isOutOrder = false;
-        this.isOrder = true;
-        this.isSell = false;
-        this.shopinFileLabel.setText("上品订单文件");
-    }//GEN-LAST:event_orderRadioButtonActionPerformed
-
-    private void outRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outRadioButtonActionPerformed
-        // TODO add your handling code here:
-        this.isOutOrder = true;
-        this.isOrder = false;
-        this.isSell = false;
-        this.shopinFileLabel.setText("上品订单文件");
-    }//GEN-LAST:event_outRadioButtonActionPerformed
-
-    private void sellRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellRadioButtonActionPerformed
-        // TODO add your handling code here:
-        this.isOutOrder = false;
-        this.isOrder = false;
-        this.isSell = true;
-        this.shopinFileLabel.setText("上品销售文件");
-    }//GEN-LAST:event_sellRadioButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,11 +447,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton bjdRadioButton;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
