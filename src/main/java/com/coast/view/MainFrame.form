@@ -65,7 +65,9 @@
                       <Component id="sellRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bjdRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="195" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="excel2drpRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -127,6 +129,7 @@
                           <Component id="outRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sellRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bjdRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="excel2drpRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="455" max="32767" attributes="0"/>
                   </Group>
@@ -292,6 +295,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bjdRadioButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="excel2drpRadioButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Excel&gt;&gt;DRP"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excel2drpRadioButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

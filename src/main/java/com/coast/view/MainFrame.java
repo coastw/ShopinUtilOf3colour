@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean isOrder = false;
     private boolean isSell = false;
     private boolean isBJD = false;
+    private boolean isExcel2drp = false;
     private List<Discount> discounts;
 
     private static final String NEXT_LINE = System.getProperty("line.separator");
@@ -47,6 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
         buttonGroup.add(outRadioButton);
         buttonGroup.add(sellRadioButton);
         buttonGroup.add(bjdRadioButton);
+        buttonGroup.add(excel2drpRadioButton);
     }
 
     /**
@@ -79,6 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
         outRadioButton = new javax.swing.JRadioButton();
         sellRadioButton = new javax.swing.JRadioButton();
         bjdRadioButton = new javax.swing.JRadioButton();
+        excel2drpRadioButton = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -171,6 +174,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        excel2drpRadioButton.setText("Excel>>DRP");
+        excel2drpRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excel2drpRadioButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,7 +192,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(sellRadioButton)
                 .addGap(18, 18, 18)
                 .addComponent(bjdRadioButton)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(excel2drpRadioButton)
+                .addContainerGap(76, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -228,7 +240,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outRadioButton)
                     .addComponent(sellRadioButton)
-                    .addComponent(bjdRadioButton))
+                    .addComponent(bjdRadioButton)
+                    .addComponent(excel2drpRadioButton))
                 .addContainerGap(455, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -302,6 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void sellRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellRadioButtonActionPerformed
         // TODO add your handling code here:
+        this.isExcel2drp = false;
         this.isOutOrder = false;
         this.isOrder = false;
         this.isSell = true;
@@ -310,6 +324,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void outRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outRadioButtonActionPerformed
         // TODO add your handling code here:
+        this.isExcel2drp = false;
         this.isOutOrder = true;
         this.isOrder = false;
         this.isSell = false;
@@ -318,6 +333,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void orderRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderRadioButtonActionPerformed
         // TODO add your handling code here:
+        this.isExcel2drp = false;
         this.isOutOrder = false;
         this.isOrder = true;
         this.isSell = false;
@@ -326,6 +342,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void sapRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapRadioButtonActionPerformed
         // TODO add your handling code here:
+        this.isExcel2drp = false;
         this.isOutOrder = false;
         this.isOrder = false;
         this.isSell = false;
@@ -352,7 +369,9 @@ public class MainFrame extends javax.swing.JFrame {
         } else if (isOutOrder) {
             resultMSG = Controler.doOut(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText());
         } else if (isBJD) {
-            resultMSG = Controler.generateBJD(ourFileTextField.getText(),outputLocationTextField.getText());
+            resultMSG = Controler.generateBJD(ourFileTextField.getText(), outputLocationTextField.getText());
+        } else if (isExcel2drp) {
+            resultMSG = Controler.generateExcel2DRP(ourFileTextField.getText(), outputLocationTextField.getText());
         } else {
             resultMSG = Controler.merge(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText(), isOrder, discounts);
         }
@@ -375,7 +394,18 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOrder = false;
         this.isOutOrder = false;
         this.isSell = false;
+        this.isExcel2drp = false;
     }//GEN-LAST:event_bjdRadioButtonActionPerformed
+
+    private void excel2drpRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excel2drpRadioButtonActionPerformed
+        // TODO add your handling code here:
+        this.isBJD = false;
+        this.isOrder = false;
+        this.isOutOrder = false;
+        this.isSell = false;
+        this.isExcel2drp = true;
+        this.resultMessageTextArea.append("将扫描到Excel中的数据合并汇总为可以导入到DRP的格式" + NEXT_LINE);
+    }//GEN-LAST:event_excel2drpRadioButtonActionPerformed
 
     private String getAppDir() {
         String dir = System.getProperty("user.dir");
@@ -449,6 +479,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton bjdRadioButton;
     private javax.swing.ButtonGroup buttonGroup;
+    private javax.swing.JRadioButton excel2drpRadioButton;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

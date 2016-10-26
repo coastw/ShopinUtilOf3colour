@@ -6,12 +6,15 @@
 package com.coast.controler;
 
 import com.coast.model.BJDProduct;
+import com.coast.model.DRPProduct;
 import com.coast.model.Discount;
 import com.coast.model.Product;
 import com.coast.model.ResultMSG;
 import com.coast.service.BJDService;
+import com.coast.service.Excel2DRPService;
 import com.coast.service.SellService;
 import com.coast.service.impl.BJDServiceImpl;
+import com.coast.service.impl.Excel2DRPServiceImpl;
 import com.coast.service.impl.SellServiceImpl;
 import com.coast.util.DiscountUtil;
 import com.coast.util.POIUtil;
@@ -180,7 +183,7 @@ public class Controler {
                 //price
                 //new
                 Cell orgPricecell = sheet.getRow(row).getCell(20);
-                if (orgPricecell==null) {
+                if (orgPricecell == null) {
                     orgPricecell = sheet.getRow(row).createCell(20);
                 }
                 orgPricecell.setCellValue(product.getOrgPrice());
@@ -268,7 +271,13 @@ public class Controler {
                     String notFoundMsg = "没有找到对应的SAP！sn=" + product.getSnCode() + " color=" + product.getColorCode() + " size=" + sapUtil.getInternationalSize() + " amount=" + product.getAmount() + "\n";
                     resultMSG.setErrorMessage(resultMSG.getErrorMessage() + notFoundMsg);
                 } else {
-                    sheet.getRow(thatRowNum).createCell(7).setCellValue(product.getAmount());
+                    //如果有就加1
+                    Cell amountCell = sheet.getRow(thatRowNum).getCell(7);
+                    if (amountCell != null) {
+                        amountCell.setCellValue(amountCell.getNumericCellValue()+product.getAmount());
+                    } else {
+                        sheet.getRow(thatRowNum).createCell(7).setCellValue(product.getAmount());
+                    }
                     sum += product.getAmount();
                 }
             }
@@ -494,6 +503,15 @@ public class Controler {
         BJDService bjdService = new BJDServiceImpl();
         List<BJDProduct> products = bjdService.readDRPStock(drpFilePath, resultMSG);
         bjdService.write(products, outPutFilePath, resultMSG);
+        return resultMSG;
+    }
+
+    public static ResultMSG generateExcel2DRP(String ourExcelFilePath, String outPutFilePath) {
+        ResultMSG resultMSG = new ResultMSG();
+        resultMSG.setErrorMessage("");
+        Excel2DRPService excel2DRPService = new Excel2DRPServiceImpl();
+        List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG);
+        excel2DRPService.write(products, outPutFilePath, resultMSG,ourExcelFilePath);
         return resultMSG;
     }
 

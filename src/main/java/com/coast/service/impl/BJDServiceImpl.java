@@ -44,8 +44,6 @@ public class BJDServiceImpl implements BJDService {
             Sheet sheet = wb.getSheetAt(0);
 
             int lastRowNum = sheet.getLastRowNum();
-            //
-//            while(sheet.getRow(row).getCell(0) ==null){
             while (row <= lastRowNum) {
                 //sn
                 Cell snCodeCell = sheet.getRow(row).getCell(2);
