@@ -11,9 +11,9 @@ package com.coast.model;
  */
 public class ResultMSG {
 
-    private String readMessage;
-    private String writeMessage;
-    private String errorMessage;
+    private String readMessage = "";
+    private String writeMessage = "";
+    private String errorMessage = "";
 
     public String getErrorMessage() {
         return errorMessage;

@@ -506,11 +506,11 @@ public class Controler {
         return resultMSG;
     }
 
-    public static ResultMSG generateExcel2DRP(String ourExcelFilePath, String outPutFilePath) {
+    public static ResultMSG generateExcel2DRP(String ourExcelFilePath, String outPutFilePath, boolean isMergeExcel2DRP) {
         ResultMSG resultMSG = new ResultMSG();
         resultMSG.setErrorMessage("");
         Excel2DRPService excel2DRPService = new Excel2DRPServiceImpl();
-        List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG);
+        List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
         excel2DRPService.write(products, outPutFilePath, resultMSG,ourExcelFilePath);
         return resultMSG;
     }

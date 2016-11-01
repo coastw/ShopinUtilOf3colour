@@ -29,6 +29,8 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean isSell = false;
     private boolean isBJD = false;
     private boolean isExcel2drp = false;
+    private boolean isMergeExcel2DRP = true;
+    
     private List<Discount> discounts;
 
     private static final String NEXT_LINE = System.getProperty("line.separator");
@@ -82,6 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
         sellRadioButton = new javax.swing.JRadioButton();
         bjdRadioButton = new javax.swing.JRadioButton();
         excel2drpRadioButton = new javax.swing.JRadioButton();
+        mergeExcel2DRPCheckBox = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -181,56 +184,67 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        mergeExcel2DRPCheckBox.setSelected(true);
+        mergeExcel2DRPCheckBox.setText("合并输出");
+        mergeExcel2DRPCheckBox.setToolTipText("将Excel中所有Sheet中的数据合并输出");
+        mergeExcel2DRPCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mergeExcel2DRPCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(225, 225, 225)
-                .addComponent(outRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(sellRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(bjdRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(excel2drpRadioButton)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(shopinFileLabel)
+                                    .addComponent(ourFileLabel)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(shopinFileTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                                    .addComponent(ourFileTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(outputLocationTextField))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(shopinFileButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ourFileButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(outputLocationButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(submitButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(resetButton))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(mergeExcel2DRPCheckBox)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(outRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(sellRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(bjdRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(excel2drpRadioButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(26, 26, 26))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(28, 28, 28)
+                    .addComponent(sapRadioButton)
+                    .addGap(18, 18, 18)
+                    .addComponent(orderRadioButton)
+                    .addContainerGap(540, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(sapRadioButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(orderRadioButton))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(shopinFileLabel)
-                                        .addComponent(ourFileLabel)
-                                        .addComponent(jLabel3))
-                                    .addGap(22, 22, 22)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(ourFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(ourFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(shopinFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(shopinFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(outputLocationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(outputLocationButton))))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(submitButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(resetButton)))
-                            .addGap(40, 40, 40))
-                        .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
                     .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,33 +256,35 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(sellRadioButton)
                     .addComponent(bjdRadioButton)
                     .addComponent(excel2drpRadioButton))
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mergeExcel2DRPCheckBox)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ourFileLabel)
+                    .addComponent(ourFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ourFileButton))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(shopinFileLabel)
+                    .addComponent(shopinFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(shopinFileButton))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(outputLocationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outputLocationButton))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitButton)
+                    .addComponent(resetButton))
+                .addContainerGap(222, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(sapRadioButton)
                         .addComponent(orderRadioButton))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ourFileLabel)
-                        .addComponent(ourFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ourFileButton))
-                    .addGap(30, 30, 30)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(shopinFileLabel)
-                        .addComponent(shopinFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(shopinFileButton))
-                    .addGap(30, 30, 30)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(outputLocationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(outputLocationButton))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(submitButton)
-                        .addComponent(resetButton))
-                    .addGap(18, 18, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 306, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -288,11 +304,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("折扣", jPanel2);
@@ -307,7 +323,9 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -375,7 +393,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else if (isBJD) {
             resultMSG = Controler.generateBJD(ourFileTextField.getText(), outputLocationTextField.getText());
         } else if (isExcel2drp) {
-            resultMSG = Controler.generateExcel2DRP(ourFileTextField.getText(), outputLocationTextField.getText());
+            resultMSG = Controler.generateExcel2DRP(ourFileTextField.getText(), outputLocationTextField.getText(), isMergeExcel2DRP);
         } else {
             resultMSG = Controler.merge(ourFileTextField.getText(), shopinFileTextField.getText(), outputLocationTextField.getText(), isOrder, discounts);
         }
@@ -411,6 +429,12 @@ public class MainFrame extends javax.swing.JFrame {
         this.isExcel2drp = true;
         this.resultMessageTextArea.append("--将扫描到Excel中的数据合并汇总为可以导入到DRP的格式--" + NEXT_LINE);
     }//GEN-LAST:event_excel2drpRadioButtonActionPerformed
+
+    private void mergeExcel2DRPCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeExcel2DRPCheckBoxActionPerformed
+        // TODO add your handling code here:
+        this.isMergeExcel2DRP = this.mergeExcel2DRPCheckBox.isSelected();
+        this.resultMessageTextArea.append("--合并输出:"+this.isMergeExcel2DRP+"--" + NEXT_LINE);
+    }//GEN-LAST:event_mergeExcel2DRPCheckBoxActionPerformed
 
     private String getAppDir() {
         String dir = System.getProperty("user.dir");
@@ -491,6 +515,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JCheckBox mergeExcel2DRPCheckBox;
     private javax.swing.JRadioButton orderRadioButton;
     private javax.swing.JButton ourFileButton;
     private javax.swing.JLabel ourFileLabel;

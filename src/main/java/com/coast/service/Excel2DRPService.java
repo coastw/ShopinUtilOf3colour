@@ -14,6 +14,6 @@ import java.util.List;
  * @author Coast
  */
 public interface Excel2DRPService {
-    List<DRPProduct> readExcel(String ourExcelFilePath, ResultMSG resultMSG);
+    List<DRPProduct> readExcel(String ourExcelFilePath, ResultMSG resultMSG, boolean isMergeExcel2DRP);
     void write(List<DRPProduct> products, String outPutFilePath, ResultMSG resultMSG,String ourExcelFilePath);
 }
