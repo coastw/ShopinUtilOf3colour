@@ -6,6 +6,7 @@
 package com.coast.service;
 
 import com.coast.model.DRPProduct;
+import com.coast.model.Excel2DRPList;
 import com.coast.model.ResultMSG;
 import java.util.List;
 
@@ -15,5 +16,7 @@ import java.util.List;
  */
 public interface Excel2DRPService {
     List<DRPProduct> readExcel(String ourExcelFilePath, ResultMSG resultMSG, boolean isMergeExcel2DRP);
+    List<Excel2DRPList> readExcelSheets(String ourExcelFilePath, ResultMSG resultMSG, boolean isMergeExcel2DRP);
     void write(List<DRPProduct> products, String outPutFilePath, ResultMSG resultMSG,String ourExcelFilePath);
+    void writeMultipleSheets(List<Excel2DRPList> sheetDatas, String outPutFilePath, ResultMSG resultMSG,String ourExcelFilePath);
 }

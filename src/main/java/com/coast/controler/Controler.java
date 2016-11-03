@@ -8,6 +8,7 @@ package com.coast.controler;
 import com.coast.model.BJDProduct;
 import com.coast.model.DRPProduct;
 import com.coast.model.Discount;
+import com.coast.model.Excel2DRPList;
 import com.coast.model.Product;
 import com.coast.model.ResultMSG;
 import com.coast.service.BJDService;
@@ -274,7 +275,7 @@ public class Controler {
                     //如果有就加1
                     Cell amountCell = sheet.getRow(thatRowNum).getCell(7);
                     if (amountCell != null) {
-                        amountCell.setCellValue(amountCell.getNumericCellValue()+product.getAmount());
+                        amountCell.setCellValue(amountCell.getNumericCellValue() + product.getAmount());
                     } else {
                         sheet.getRow(thatRowNum).createCell(7).setCellValue(product.getAmount());
                     }
@@ -510,8 +511,14 @@ public class Controler {
         ResultMSG resultMSG = new ResultMSG();
         resultMSG.setErrorMessage("");
         Excel2DRPService excel2DRPService = new Excel2DRPServiceImpl();
-        List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
-        excel2DRPService.write(products, outPutFilePath, resultMSG,ourExcelFilePath);
+        if (isMergeExcel2DRP) {
+            List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
+            excel2DRPService.write(products, outPutFilePath, resultMSG, ourExcelFilePath);
+        }else{
+            List<Excel2DRPList> readExcelSheets = excel2DRPService.readExcelSheets(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
+            excel2DRPService.writeMultipleSheets(readExcelSheets, outPutFilePath, resultMSG, ourExcelFilePath);
+        }
+
         return resultMSG;
     }
 
