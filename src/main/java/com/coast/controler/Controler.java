@@ -512,10 +512,10 @@ public class Controler {
         resultMSG.setErrorMessage("");
         Excel2DRPService excel2DRPService = new Excel2DRPServiceImpl();
         if (isMergeExcel2DRP) {
-            List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
+            List<DRPProduct> products = excel2DRPService.readExcel(ourExcelFilePath, resultMSG);
             excel2DRPService.write(products, outPutFilePath, resultMSG, ourExcelFilePath);
         }else{
-            List<Excel2DRPList> readExcelSheets = excel2DRPService.readExcelSheets(ourExcelFilePath, resultMSG, isMergeExcel2DRP);
+            List<Excel2DRPList> readExcelSheets = excel2DRPService.readExcelSheets(ourExcelFilePath, resultMSG);
             excel2DRPService.writeMultipleSheets(readExcelSheets, outPutFilePath, resultMSG, ourExcelFilePath);
         }
 

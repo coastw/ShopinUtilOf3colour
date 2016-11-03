@@ -28,7 +28,7 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
     private static final String NEXT_LINE = System.getProperty("line.separator");
 
     @Override
-    public List<DRPProduct> readExcel(String ourExcelFilePath, ResultMSG resultMSG, boolean isMergeExcel2DRP) {
+    public List<DRPProduct> readExcel(String ourExcelFilePath, ResultMSG resultMSG) {
         //1.加载Excel
         //2.去除最后的唯一码,保留13位.
         //3.添加到ArrayList并合并相同的款号
@@ -41,24 +41,18 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
             List<DRPProduct> products = new ArrayList<>();
             int row = 0;
             //merge sheet?
-            if (isMergeExcel2DRP) {
-                Iterator<Sheet> sheetIterator = wb.sheetIterator();
-                while (sheetIterator.hasNext()) {
-                    Sheet sheet = sheetIterator.next();
-                    String sheetName = sheet.getSheetName();
-                    int rowcount = readSheetData(sheet, products);
-                    row += rowcount;
-                    resultMSG.setReadMessage(resultMSG.getReadMessage() + "读取" + sheetName + ":" + rowcount + "条记录." + NEXT_LINE);
-                }
-            } else {
-                Sheet sheet = wb.getSheetAt(0);
-                row = readSheetData(sheet, products);
+            Iterator<Sheet> sheetIterator = wb.sheetIterator();
+            while (sheetIterator.hasNext()) {
+                Sheet sheet = sheetIterator.next();
+                String sheetName = sheet.getSheetName();
+                int rowcount = readSheetData(sheet, products);
+                row += rowcount;
+                resultMSG.setReadMessage(resultMSG.getReadMessage() + "-" + sheetName + "-读取:" + rowcount + "条记录." + NEXT_LINE);
             }
-
-            resultMSG.setReadMessage(resultMSG.getReadMessage() + "##读取Excel2DRP完成:共" + row + "行!##");
+            resultMSG.setReadMessage(resultMSG.getReadMessage() + "==读取[" + file.getName() + "]完成:共" + row + "行!==" + NEXT_LINE);
             return products;
         } catch (Exception ex) {
-            resultMSG.setErrorMessage("读取Excel2DRP出错!!!" + ex.toString());
+            resultMSG.setErrorMessage("读取Excel2DRP" + file.getName() + "出错!!!" + ex.toString() + NEXT_LINE);
             return null;
         }
 
@@ -106,13 +100,13 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
             wb.getSheetAt(0).setForceFormulaRecalculation(true);
             // Write the output to a file
             wb.write(fos);
-            resultMSG.setWriteMessage("##写入Excel2DRP完成,共" + sum + "件!##");
+            resultMSG.setWriteMessage("==写入[" + fileName + "]完成,共" + sum + "件!==" + NEXT_LINE);
         } catch (Exception ex) {
-            resultMSG.setErrorMessage("写入Excel2DRP出错!!!" + ex.toString());
+            resultMSG.setErrorMessage("!!!写入Excel2DRP出错!!!" + ex.toString() + NEXT_LINE);
         }
     }
-
     //读取sheet中的数据并添加到已有的List,返回读取的行数
+
     private int readSheetData(Sheet sheet, List<DRPProduct> products) {
         POIUtil poiUtil = new POIUtil();
 
@@ -148,7 +142,7 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
     }
 
     @Override
-    public List<Excel2DRPList> readExcelSheets(String ourExcelFilePath, ResultMSG resultMSG, boolean isMergeExcel2DRP) {
+    public List<Excel2DRPList> readExcelSheets(String ourExcelFilePath, ResultMSG resultMSG) {
         List<Excel2DRPList> sheetDatas = new ArrayList<>();
 
         File file = new File(ourExcelFilePath);
@@ -167,28 +161,25 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
                 sheetDatas.add(new Excel2DRPList(sheetName, drpProducts));
 
                 row += rowCount;
-                resultMSG.setReadMessage(resultMSG.getReadMessage() + "读取" + sheetName + ":" + rowCount + "条记录." + NEXT_LINE);
+                resultMSG.setReadMessage(resultMSG.getReadMessage() + "-" + sheetName + "-读取:" + rowCount + "条记录." + NEXT_LINE);
             }
-            resultMSG.setReadMessage(resultMSG.getReadMessage() + "##读取Excel2DRP完成:共" + row + "行!##");
+            resultMSG.setReadMessage(resultMSG.getReadMessage() + "==读取[" + file.getName() + "]完成:共" + row + "行!==" + NEXT_LINE);
             return sheetDatas;
         } catch (Exception ex) {
-            resultMSG.setErrorMessage("读取Excel2DRP出错!!!" + ex.toString());
+            resultMSG.setErrorMessage("!!!读取Excel2DRP[" + file.getName() + "]出错!!!" + ex.toString() + NEXT_LINE);
             return null;
         }
     }
 
     @Override
     public void writeMultipleSheets(List<Excel2DRPList> sheetDatas, String outPutFilePath, ResultMSG resultMSG, String ourExcelFilePath) {
-
         if (sheetDatas.size() != 0) {
-
             Iterator<Excel2DRPList> iterator = sheetDatas.iterator();
             int amount = 0;
             while (iterator.hasNext()) {
                 Excel2DRPList e2dList = iterator.next();
                 String sheetName = e2dList.getName();
                 List<DRPProduct> products = e2dList.getProducts();
-
                 File ourExcelFile = new File(ourExcelFilePath);
                 String sourceFileName = ourExcelFile.getName();
                 String fileName = sourceFileName.substring(0, sourceFileName.lastIndexOf(".")) + "(" + sheetName + ")" + "_drp.xls";
@@ -199,7 +190,6 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
                 }
                 try (Workbook wb = new HSSFWorkbook(); FileOutputStream fos = new FileOutputStream(file)) {
                     Sheet sheet = wb.createSheet(sheetName);
-
                     //Title
                     //head
                     Row headRow = sheet.createRow(0);
@@ -229,16 +219,13 @@ public class Excel2DRPServiceImpl implements Excel2DRPService {
                     wb.getSheetAt(0).setForceFormulaRecalculation(true);
                     // Write the output to a file
                     wb.write(fos);
-                    resultMSG.setWriteMessage(resultMSG.getWriteMessage() + "-" +sheetName+ "->写入Excel2DRP完成,共" + sum + "件!" + NEXT_LINE);
-
+                    resultMSG.setWriteMessage(resultMSG.getWriteMessage() + "-" + sheetName + "-写入[" + fileName + "]完成,共" + sum + "件!" + NEXT_LINE);
                 } catch (Exception ex) {
                     resultMSG.setErrorMessage("!!!写入Excel2DRP出错!!!" + ex.toString());
                 }
             }
-            resultMSG.setWriteMessage(resultMSG.getWriteMessage() + "##写入Excel2DRP完成,共 " + amount +  " 件!##" + NEXT_LINE);
-
+            resultMSG.setWriteMessage(resultMSG.getWriteMessage() + "==写入Excel2DRP完成,共 " + amount + " 件!==" + NEXT_LINE);
         }
-
     }
 
 }

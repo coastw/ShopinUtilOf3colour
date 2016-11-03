@@ -338,7 +338,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOrder = false;
         this.isSell = true;
         this.shopinFileLabel.setText("上品销售文件");
-        this.resultMessageTextArea.append("--生成销售小票--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===生成销售小票===" + NEXT_LINE);
     }//GEN-LAST:event_sellRadioButtonActionPerformed
 
     private void outRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outRadioButtonActionPerformed
@@ -348,7 +348,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOrder = false;
         this.isSell = false;
         this.shopinFileLabel.setText("上品订单文件");
-        this.resultMessageTextArea.append("--生成上品退货订单--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===生成上品退货订单===" + NEXT_LINE);
     }//GEN-LAST:event_outRadioButtonActionPerformed
 
     private void orderRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderRadioButtonActionPerformed
@@ -358,7 +358,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOrder = true;
         this.isSell = false;
         this.shopinFileLabel.setText("上品订单文件");
-        this.resultMessageTextArea.append("--生成上品订单--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===生成上品订单===" + NEXT_LINE);
     }//GEN-LAST:event_orderRadioButtonActionPerformed
 
     private void sapRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapRadioButtonActionPerformed
@@ -368,7 +368,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOrder = false;
         this.isSell = false;
         this.shopinFileLabel.setText("上品SAP模板");
-        this.resultMessageTextArea.append("--生成上品SAP--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===生成上品SAP===" + NEXT_LINE);
     }//GEN-LAST:event_sapRadioButtonActionPerformed
 
     private void outputLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputLocationButtonActionPerformed
@@ -417,7 +417,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOutOrder = false;
         this.isSell = false;
         this.isExcel2drp = false;
-        this.resultMessageTextArea.append("--注意:将DRP中的库存数据显示为横排再导出,方可生成报价单--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===注意:将DRP中的库存数据显示为横排再导出,方可生成报价单===" + NEXT_LINE);
     }//GEN-LAST:event_bjdRadioButtonActionPerformed
 
     private void excel2drpRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excel2drpRadioButtonActionPerformed
@@ -427,13 +427,13 @@ public class MainFrame extends javax.swing.JFrame {
         this.isOutOrder = false;
         this.isSell = false;
         this.isExcel2drp = true;
-        this.resultMessageTextArea.append("--将扫描到Excel中的数据合并汇总为可以导入到DRP的格式--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===将扫描到Excel中的数据合并汇总为可以导入到DRP的格式===" + NEXT_LINE);
     }//GEN-LAST:event_excel2drpRadioButtonActionPerformed
 
     private void mergeExcel2DRPCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeExcel2DRPCheckBoxActionPerformed
         // TODO add your handling code here:
         this.isMergeExcel2DRP = this.mergeExcel2DRPCheckBox.isSelected();
-        this.resultMessageTextArea.append("--合并输出:"+this.isMergeExcel2DRP+"--" + NEXT_LINE);
+        this.resultMessageTextArea.append("===合并输出:"+this.isMergeExcel2DRP+"===" + NEXT_LINE);
     }//GEN-LAST:event_mergeExcel2DRPCheckBoxActionPerformed
 
     private String getAppDir() {
