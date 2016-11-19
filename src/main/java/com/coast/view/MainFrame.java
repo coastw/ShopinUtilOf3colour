@@ -8,6 +8,8 @@ package com.coast.view;
 import com.coast.controler.Controler;
 import com.coast.model.Discount;
 import com.coast.model.ResultMSG;
+import com.coast.service.ShopinPurchaseOrderService;
+import com.coast.service.impl.ShopinPurchaseOrderServiceImpl;
 import com.coast.table.DiscountTableListener;
 import com.coast.table.DiscountTableModel;
 import com.coast.util.DiscountUtil;
@@ -30,7 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean isBJD = false;
     private boolean isExcel2drp = false;
     private boolean isMergeExcel2DRP = true;
-    
+
     private List<Discount> discounts;
 
     private static final String NEXT_LINE = System.getProperty("line.separator");
@@ -44,6 +46,9 @@ public class MainFrame extends javax.swing.JFrame {
         this.setLocation((int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - this.getWidth() / 2,
                 (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - this.getHeight() / 2);
         outputLocationTextField.setText(getAppDir());
+        jPanel3TextField2.setText(getAppDir() + File.separator + "S.xls");
+        jPanel3TextField3.setText(getAppDir() + File.separator + "K.xls");
+        jPanel3TextField4.setText(getAppDir());
         sapRadioButton.setSelected(true);
         buttonGroup.add(sapRadioButton);
         buttonGroup.add(orderRadioButton);
@@ -89,6 +94,23 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel3TextField1 = new javax.swing.JTextField();
+        jPanel3TextField2 = new javax.swing.JTextField();
+        jPanel3TextField3 = new javax.swing.JTextField();
+        jPanel3TextField4 = new javax.swing.JTextField();
+        jPanel3Button1 = new javax.swing.JButton();
+        jPanel3Button2 = new javax.swing.JButton();
+        jPanel3Button3 = new javax.swing.JButton();
+        jPanel3Button4 = new javax.swing.JButton();
+        jPanel3ButtonSubmit = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel3TextArea = new javax.swing.JTextArea();
+        jpanel3ButtonReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("三彩生成上品数据");
@@ -318,6 +340,139 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("折扣", jPanel2);
 
+        jLabel1.setText("DRP导出的文件");
+
+        jLabel2.setText("上品三彩数据文件");
+
+        jLabel4.setText("上品桑卡数据文件");
+
+        jLabel5.setText("输出目录");
+
+        jPanel3TextField1.setEnabled(false);
+
+        jPanel3TextField2.setEnabled(false);
+
+        jPanel3TextField3.setEnabled(false);
+
+        jPanel3TextField4.setEnabled(false);
+
+        jPanel3Button1.setText("选择文件");
+        jPanel3Button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPanel3Button1ActionPerformed(evt);
+            }
+        });
+
+        jPanel3Button2.setText("选择文件");
+        jPanel3Button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPanel3Button2ActionPerformed(evt);
+            }
+        });
+
+        jPanel3Button3.setText("选择文件");
+        jPanel3Button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPanel3Button3ActionPerformed(evt);
+            }
+        });
+
+        jPanel3Button4.setText("选择目录");
+        jPanel3Button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPanel3Button4ActionPerformed(evt);
+            }
+        });
+
+        jPanel3ButtonSubmit.setText(" 确 定 ");
+        jPanel3ButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPanel3ButtonSubmitActionPerformed(evt);
+            }
+        });
+
+        jPanel3TextArea.setColumns(20);
+        jPanel3TextArea.setRows(5);
+        jScrollPane3.setViewportView(jPanel3TextArea);
+
+        jpanel3ButtonReset.setText(" 重 置 ");
+        jpanel3ButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpanel3ButtonResetActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel3ButtonSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jpanel3ButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3TextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                            .addComponent(jPanel3TextField2)
+                            .addComponent(jPanel3TextField3)
+                            .addComponent(jPanel3TextField4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3Button1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3Button2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3Button3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3Button4, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(22, 22, 22))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel3TextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3Button1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jPanel3TextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3Button2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jPanel3TextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3Button3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jPanel3TextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3Button4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPanel3ButtonSubmit)
+                    .addComponent(jpanel3ButtonReset))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("智能订单", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -438,9 +593,53 @@ public class MainFrame extends javax.swing.JFrame {
     private void mergeExcel2DRPCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeExcel2DRPCheckBoxActionPerformed
         // TODO add your handling code here:
         this.isMergeExcel2DRP = this.mergeExcel2DRPCheckBox.isSelected();
-        this.resultMessageTextArea.append("===合并输出:"+this.isMergeExcel2DRP+"===" + NEXT_LINE);
+        this.resultMessageTextArea.append("===合并输出:" + this.isMergeExcel2DRP + "===" + NEXT_LINE);
     }//GEN-LAST:event_mergeExcel2DRPCheckBoxActionPerformed
 
+    /*
+    Panel3 start
+     */
+    private void jPanel3Button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPanel3Button1ActionPerformed
+        chooseFile(jPanel3TextField1, JFileChooser.FILES_ONLY, new ExcelFileFilter());
+    }//GEN-LAST:event_jPanel3Button1ActionPerformed
+
+    private void jPanel3Button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPanel3Button2ActionPerformed
+        chooseFile(jPanel3TextField2, JFileChooser.FILES_ONLY, new ExcelFileFilter());
+    }//GEN-LAST:event_jPanel3Button2ActionPerformed
+
+    private void jPanel3Button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPanel3Button3ActionPerformed
+        chooseFile(jPanel3TextField3, JFileChooser.FILES_ONLY, new ExcelFileFilter());
+    }//GEN-LAST:event_jPanel3Button3ActionPerformed
+
+    private void jPanel3Button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPanel3Button4ActionPerformed
+        chooseFile(jPanel3TextField4, JFileChooser.DIRECTORIES_ONLY);
+    }//GEN-LAST:event_jPanel3Button4ActionPerformed
+
+    private void jPanel3ButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPanel3ButtonSubmitActionPerformed
+        // TODO add your handling code here:
+        jPanel3TextArea.append("===开始智能创建订单===" + NEXT_LINE);
+        ShopinPurchaseOrderService orderService = new ShopinPurchaseOrderServiceImpl();
+        File drpSourceFile = new File(jPanel3TextField1.getText());
+        File destDir = new File(jPanel3TextField4.getText());
+        File s_shopinPurchaseOrderTemplateFile = new File(jPanel3TextField2.getText());
+        File k_shopinPurchaseOrderTemplateFile = new File(jPanel3TextField3.getText());
+        ResultMSG resultMSG = new ResultMSG();
+        orderService.generatePurchaseOrder(drpSourceFile, destDir, s_shopinPurchaseOrderTemplateFile, k_shopinPurchaseOrderTemplateFile, resultMSG);
+        resultMSG.setFinalMessage("===智能订单处理完成===" + NEXT_LINE + NEXT_LINE);
+        jPanel3TextArea.append(resultMSG.getReadMessage() + NEXT_LINE + resultMSG.getWriteMessage() + NEXT_LINE + resultMSG.getErrorMessage() + NEXT_LINE + resultMSG.getFinalMessage());
+    }//GEN-LAST:event_jPanel3ButtonSubmitActionPerformed
+
+    private void jpanel3ButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpanel3ButtonResetActionPerformed
+        // TODO add your handling code here:
+        jPanel3TextField2.setText(getAppDir() + File.separator + "S.xls");
+        jPanel3TextField3.setText(getAppDir() + File.separator + "K.xls");
+        jPanel3TextField4.setText(getAppDir());
+        jPanel3TextArea.setText("");
+    }//GEN-LAST:event_jpanel3ButtonResetActionPerformed
+
+    /*
+    Panel3 end
+     */
     private String getAppDir() {
         String dir = System.getProperty("user.dir");
         return dir;
@@ -514,13 +713,30 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton bjdRadioButton;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JRadioButton excel2drpRadioButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton jPanel3Button1;
+    private javax.swing.JButton jPanel3Button2;
+    private javax.swing.JButton jPanel3Button3;
+    private javax.swing.JButton jPanel3Button4;
+    private javax.swing.JButton jPanel3ButtonSubmit;
+    private javax.swing.JTextArea jPanel3TextArea;
+    private javax.swing.JTextField jPanel3TextField1;
+    private javax.swing.JTextField jPanel3TextField2;
+    private javax.swing.JTextField jPanel3TextField3;
+    private javax.swing.JTextField jPanel3TextField4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jpanel3ButtonReset;
     private javax.swing.JCheckBox mergeExcel2DRPCheckBox;
     private javax.swing.JRadioButton orderRadioButton;
     private javax.swing.JButton ourFileButton;
