@@ -55,7 +55,8 @@ public class SellServiceImpl implements SellService {
                 //price
                 Cell priceCell = sheet.getRow(row).getCell(8);
                 String price = poiUtil.getCellContentToString(priceCell);
-                //是不是负, 是负变成正
+                //为啥要负要变正? 因为统计总售价的时候-*-变成+。实际上只需要数量为-就ok
+                //是不是负, 是负变成正。将退货的销售价格变为正，销售数量保持原有。
                 boolean isNagetive = false;
                 if (price.matches("^-.*")) {
                     price = price.substring(1);
@@ -66,9 +67,9 @@ public class SellServiceImpl implements SellService {
                 Cell amountCell = sheet.getRow(row).getCell(10);
                 String amount = poiUtil.getCellContentToString(amountCell);
                 //是不是负, 是正变成负
-                if (isNagetive) {
-                    amount = "-" + amount;
-                }
+//                if (isNagetive) {
+//                    amount = "-" + amount;
+//                }
                 //记录数量
                 sum += Integer.parseInt(amount);
                 double sellPrice = Double.parseDouble(price);
@@ -88,16 +89,19 @@ public class SellServiceImpl implements SellService {
             resultMSG.setReadMessage("读取上品销售Excel完成:共" + sum + "件!总金额:" + allPrice + "元!");
             return products;
         } catch (Exception ex) {
-            resultMSG.setErrorMessage("读取上品销售Excel出错!" + ex.getMessage());
+            resultMSG.appendErrorMessage("读取上品销售Excel出错!" + ex.getMessage());
             return null;
         }
     }
 
     @Override
-    public void write(List<Product> products, String outPutFilePath, ResultMSG resultMSG) {
-        String fileName = "销售小票.xls";
-        String filePath = outPutFilePath + File.separator + fileName;
-        File file = new File(filePath);
+    public void write(List<Product> products, String outPutFilePath, ResultMSG resultMSG, String shopinFilePath) {
+        File shopinFile = new File(shopinFilePath);
+        String fileName = shopinFile.getName();
+        fileName = fileName.substring(0, fileName.lastIndexOf(".")) + "__销售小票.xls";
+        String outputFilePath = outPutFilePath + File.separator + fileName;
+        
+        File file = new File(outputFilePath);
         if (file.exists()) {
             file.delete();
         }
@@ -133,7 +137,7 @@ public class SellServiceImpl implements SellService {
             wb.write(fos);
             resultMSG.setWriteMessage("写入销售小票完成");
         } catch (Exception ex) {
-            resultMSG.setErrorMessage("写入销售小票出错!" + ex.getMessage());
+            resultMSG.appendErrorMessage("写入销售小票出错!" + ex.getMessage());
         }
     }
 

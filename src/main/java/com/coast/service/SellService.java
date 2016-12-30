@@ -16,5 +16,5 @@ import java.util.List;
 public interface SellService {
     List<Product> getProductsFromShopinSellExcel(String filePath, ResultMSG resultMSG);
 
-    void write(List<Product> products, String outPutFilePath, ResultMSG resultMSG);
+    void write(List<Product> products, String outPutFilePath, ResultMSG resultMSG, String shopinFilePath);
 }

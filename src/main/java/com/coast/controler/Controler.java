@@ -48,12 +48,13 @@ public class Controler {
 
     private static final Logger LOGGER = Logger.getLogger(Controler.class);
 
+    //销售小票
     public static ResultMSG doSell(String shopinFilePath, String outPutFilePath) {
         ResultMSG resultMSG = new ResultMSG();
         resultMSG.setErrorMessage("");
         SellService sellService = new SellServiceImpl();
         List<Product> products = sellService.getProductsFromShopinSellExcel(shopinFilePath, resultMSG);
-        sellService.write(products, outPutFilePath, resultMSG);
+        sellService.write(products, outPutFilePath, resultMSG, shopinFilePath);
         return resultMSG;
     }
 
