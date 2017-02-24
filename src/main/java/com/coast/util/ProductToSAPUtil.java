@@ -21,6 +21,9 @@ public class ProductToSAPUtil {
             case "K":
                 brand = "sonca桑卡";
                 break;
+            case "Y":
+                brand = "sonca桑卡";
+                break;
             default:
                 brand = "三colour";
                 break;
