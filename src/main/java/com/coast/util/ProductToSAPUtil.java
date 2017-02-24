@@ -18,14 +18,11 @@ public class ProductToSAPUtil {
         String brand;
         String brandCode = this.product.getFullSn().substring(0, 1);
         switch (brandCode) {
-            case "K":
-                brand = "sonca桑卡";
-                break;
-            case "Y":
-                brand = "sonca桑卡";
+            case "S":
+                brand = "三colour";
                 break;
             default:
-                brand = "三colour";
+                brand = "sonca桑卡";
                 break;
         }
         return brand;
