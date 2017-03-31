@@ -46,7 +46,9 @@ public class MainFrame extends javax.swing.JFrame {
         this.setLocation((int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - this.getWidth() / 2,
                 (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - this.getHeight() / 2);
         outputLocationTextField.setText(getAppDir());
-        jPanel3TextField2.setText(getAppDir() + File.separator + "S.xls");
+        //2017-03-31 杭州公司将所有三彩改标为桑卡
+        //jPanel3TextField2.setText(getAppDir() + File.separator + "S.xls");
+        jPanel3TextField2.setText(getAppDir() + File.separator + "K.xls");
         jPanel3TextField3.setText(getAppDir() + File.separator + "K.xls");
         jPanel3TextField4.setText(getAppDir());
         sapRadioButton.setSelected(true);

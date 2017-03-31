@@ -19,7 +19,9 @@ public class ProductToSAPUtil {
         String brandCode = this.product.getFullSn().substring(0, 1);
         switch (brandCode) {
             case "S":
-                brand = "三colour";
+                //2017-03-31 现在S都从三彩改标为桑卡
+                //brand = "三colour";
+                brand = "sonca桑卡";
                 break;
             default:
                 brand = "sonca桑卡";
