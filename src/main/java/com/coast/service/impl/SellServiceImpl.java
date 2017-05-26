@@ -53,7 +53,7 @@ public class SellServiceImpl implements SellService {
                 String sizeCode = getSizeCode(sizeText);
 
                 //price
-                Cell priceCell = sheet.getRow(row).getCell(8);
+                Cell priceCell = sheet.getRow(row).getCell(11);
                 String price = poiUtil.getCellContentToString(priceCell);
                 //为啥要负要变正? 因为统计总售价的时候-*-变成+。实际上只需要数量为-就ok
                 //是不是负, 是负变成正。将退货的销售价格变为正，销售数量保持原有。
@@ -64,7 +64,7 @@ public class SellServiceImpl implements SellService {
                 }
 
                 //amount
-                Cell amountCell = sheet.getRow(row).getCell(10);
+                Cell amountCell = sheet.getRow(row).getCell(13);
                 String amount = poiUtil.getCellContentToString(amountCell);
                 //是不是负, 是正变成负
 //                if (isNagetive) {
